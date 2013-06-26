@@ -1,0 +1,52 @@
+<html>
+  <script src="raphael.js"></script>
+  <script src="g.raphael.js"></script>
+  <script src="g.pie.js"></script>
+  <script src="g.line.js"></script>
+  <script>
+  window.onload = function () {
+    // demo
+    var r = Raphael(50, 50, 2640, 800);
+    // Creates pie chart at with center at 320, 200,
+    // radius 100 and data: [55, 20, 13, 32, 5, 1, 2]
+    // r.piechart(320, 240, 100, [55, 20, 13, 32, 5, 1, 2]);
+    
+    var x = [], y = [], y2 = [], y3 = [], y4 = [];
+    var border = 5;
+    for (var i = 0; i < 100 - 2*border; i++) {
+      x[i] = ((i+border)/100);
+      y[i] = x[i];
+      y2[i] = (1-x[i]);
+      y3[i] = Math.round(1000/(2-x[i]))/1000;
+      y4[i] = Math.round(1000/(x[i]+1))/1000;}
+
+    //r.text(50, 10, ""+y4[0]+" ");
+    var lchart = r.linechart(50,10,300,220,[x,x,[-0.1,1.1]],[y3, y4,[0.4,1.1]], 
+                             {smooth: true, axis: "0 0 1 1", axisxstep: 1, axisystep: 1,
+                              colors: [Raphael.g.colors[2],       // the first line is red  
+                                       Raphael.g.colors[1],       // the second line is blue
+                                       "transparent"    // the third line is invisible
+                                      ]});
+
+    var xText = lchart.axis[0].text.items;      
+    for(var i in xText){ // Iterate through the array of dom elems, the current dom elem will be i
+      var _oldLabel = (xText[i].attr('text') + "").split('.'), // Get the current dom elem in the loop, and split it on the decimal
+      _newLabel = ""; // Format the result into time strings
+      xText[i].attr({'text': _newLabel}); // Set the text of the current elem with the result
+    };
+ 
+    var yText = lchart.axis[1].text.items;      
+    for(var i in yText){ // Iterate through the array of dom elems, the current dom elem will be i
+      var _oldLabel = (yText[i].attr('text') + "").split('.'), // Get the current dom elem in the loop, and split it on the decimal
+      _newLabel = ""; // Format the result into time strings
+      yText[i].attr({'text': _newLabel}); // Set the text of the current elem with the result
+    };
+
+ 
+  };
+</script>
+  <body>
+    Welfare economics
+    <div id="holder"></div>
+  </body>
+</html>
